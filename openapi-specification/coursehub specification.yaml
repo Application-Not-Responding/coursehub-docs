@@ -1,9 +1,7 @@
 openapi: 3.0.0
 info:
-  title: CourseHub Service API
-  description: >-
-    This API provides basic operations for CourseHub application such as
-    creating an account, editing and accessing courses. 
+  title: CourseHub API
+  description: This API provides basic operations for CourseHub application.
   version: 1.0.0
 servers:
   - url: https://localhost/api/v1
@@ -11,9 +9,9 @@ tags:
   - name: UserService
     description: Operations related to users
   - name: CourseService
-    description: Operations related to courses
+    description: Operations related to tests
   - name: TestService
-    description: Operations related to test
+    description: Operations related to courses
   - name: FeedbackService
     description: Operations related to feedbacks
 paths:
@@ -21,61 +19,96 @@ paths:
     post:
       summary: Create a new student
       responses:
-        '200':
-          description: Student created successfully
+        '201':
+          description: Student created!
       tags:
         - UserService
     get:
       summary: Get all students
       responses:
         '200':
-          description: '---'
+          description: Students retrived!
       tags:
         - UserService
   /users/students/{studentId}:
     get:
       summary: Get student by ID
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Student retrived!
       tags:
         - UserService
   /users/students/{studentId}/student-fullname:
     put:
-      summary: Edit student full name by ID
+      summary: Edit student fullname by ID
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Student fullname updated!
       tags:
         - UserService
   /users/students/{studentId}/courses:      
-    post:
-      summary: Add course to user's course list
+    put:
+      summary: Update the student's course list
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Student course updated!
       tags:
         - UserService
-    delete:
-      summary: Delete course from user's course list
-      responses:
-        '200':
-          description: '---'
-      tags:
-        - UserService
-  /users/subscribers/{courseId}:       
     get:
-      summary: Get subscribers for course by courseID
+      summary: Get student's course list
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Student course list retrived!
+      tags:
+        - UserService
+  /users/students/{studentId}/courses/{courseId}:       
+    get:
+      summary: Get student's course by ID
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Student course retrived!
       tags:
         - UserService    
   /users/organizers:
     post:
       summary: Create a new Organizer
       responses:
-        '200':
+        '201':
           description: Organizer created successfully
       tags:
         - UserService
@@ -83,54 +116,78 @@ paths:
       summary: Get all organizers
       responses:
         '200':
-          description: '---'
+          description: Organizers retrived!
       tags:
         - UserService
   /users/organizers/{organizerId}:
     get:
       summary: Get organizer by ID
+      parameters:
+        - name: organizerId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Organizer retrived!
       tags:
         - UserService
   /users/organizers/{organizerId}/organizer-companyname:
     put:
       summary: Edit organizer company name by ID
+      parameters:
+        - name: organizerId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Organizer company name updated!
       tags:
         - UserService
   /users/organizers/{organizerId}/courses:
-    post:
-      summary: Add course to organizer's course list
+    put:
+      summary: Update organizer's course list
+      parameters:
+        - name: organizerId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Organizer course list updated!
       tags:
         - UserService
-    delete:
-      summary: Delete course from organizer's course list
+    get:
+      summary: Get all organizer's course list
+      parameters:
+        - name: organizerId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Organizer course list retrived!
       tags:
         - UserService
   /users/login:
     post:
       summary: Login into user account
       responses:
-        '200':
-          description: Organizer created successfully
+        '201':
+          description: You successfully login to your account!
       tags:
         - UserService
   /users/logout:
     post:
       summary: Logout from user account
       responses:
-        '200':
-          description: Organizer created successfully
+        '201':
+          description: You successfully logout from your account!
       tags:
         - UserService
   /users/password-recovery-request:
@@ -138,7 +195,7 @@ paths:
       summary: Create password change request using email linked to account
       responses:
         '200':
-          description: Organizer created successfully
+          description: Recovery request was successfully submitted to your email adress!
       tags:
         - UserService
   /users/change-password-by-recovery-code:
@@ -146,7 +203,7 @@ paths:
       summary: Change the password using the recovery code
       responses:
         '200':
-          description: Organizer created successfully
+          description: Password changed!
       tags:
         - UserService
   /users/change-password-by-previous-password:
@@ -154,273 +211,606 @@ paths:
       summary: Change the password using the previous password
       responses:
         '200':
-          description: Organizer created successfully
+          description: Password changed!
       tags:
         - UserService
   /courses:
     post:
       summary: Create a new course
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Course created!
       tags:
         - CourseService
     get:
       summary: Get all courses
       responses:
         '200':
-          description: '---'
+          description: Courses retrived!
       tags:
         - CourseService
   /courses/{courseId}:
     get:
       summary: Get course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Course retrived!
       tags:
         - CourseService
     put:
       summary: Edit course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Course updated!
       tags:
         - CourseService
     delete:
       summary: Delete course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Course deleted!
       tags:
         - CourseService
   /courses/{courseId}/hide-course:
-    post:
-      summary: Set hide property for course by ID
+    put:
+      summary: Hide course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Course visiability was changed!
       tags:
         - CourseService
   /courses/{courseId}/topics:
     post:
       summary: Create a new topic in an existing course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Topic created!
       tags:
         - CourseService
     get:
       summary: Get all existing topics by сourse ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Topics retrived!
       tags:
         - CourseService
   /courses/{courseId}/topics/{topicId}:
     get:
       summary: Get an existing topic by сourse and topic ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Topic retrived!
       tags:
         - CourseService
     put:
       summary: Edit an existing topic by сourse and topic ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Topic updated!
       tags:
         - CourseService
     delete:
       summary: Delete an existing topic by сourse and topic ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Topic deleted!
       tags:
         - CourseService
   /courses/{courseId}/topics/{topicId}/lessons:
     post:
       summary: Create a new lesson in an existing course and topic
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Lesson created!
       tags:
         - CourseService
     get:
       summary: Get all lessons in an existing course and topic
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Lessons retrived!
       tags:
         - CourseService
   /courses/{courseId}/topics/{topicId}/lessons/{lessonId}:
     get:
       summary: Get lesson in an existing course and topic
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Lesson retrived!
       tags:
         - CourseService
     put:
       summary: Edit lesson in an existing course and topic
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Lesson updated!
       tags:
         - CourseService
     delete:
       summary: Delete lesson in an existing course and topic
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: lessonId
+          in: path
+          required: true
+          schema:
+            type: integer 
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Lesson deleted!
       tags:
         - CourseService
-  /courses/subscriptions/{userId}:
-    get:
-      summary: Get courses in subscriptions list of user by userId
-      responses:
-        '200':
-          description: '---'
-      tags:
-        - CourseService
-  /courses/subscriptions/{userId}/course/{courseId}:
-    post:
-      summary: Add subscriber to course
-      responses:
-        '200':
-          description: '---'
-      tags:
-        - CourseService
-    delete:
-      summary: Remove subscriber from course
-      responses:
-        '200':
-          description: '---'
-      tags:
-        - CourseService
-  /tests:
+  /tests/courses/{courseId}/topic/{topicId}:
     post:
       summary: Create a new test
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Test created!
       tags:
         - TestService
+  /tests/courses/{courseId}/topics/{topicId}:
     get:
       summary: Get all tests
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Tests retrived!
       tags:
         - TestService
-  /tests/{testId}:
+  /tests/{testId}/courses/{courseId}/topic/{topicId}:
     get:
       summary: Get an existing test by ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Test retrived!
       tags:
         - TestService
     put:
       summary: Edit an existing test by ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer 
       responses:
         '200':
-          description: '---'
+          description: Test updated!
       tags:
         - TestService
     delete:
       summary: Delete an existing test by ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer 
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Test deleted!
       tags:
         - TestService
-  /tests/{testId}/questions:
+  /tests/{testId}/courses/{courseId}/topic/{topicId}/questions:
     post:
       summary: Create a question
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Questions created!
       tags:
         - TestService
     get:
       summary: Get all questions by test ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Questions retrieved!
       tags:
         - TestService
-  /tests/{testId}/questions/{questionId}:
+  /tests/{testId}/courses/{courseId}/topic/{topicId}/questions/{questionId}:
     get:
       summary: Get an existing question by ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Question retrieved!
       tags:
         - TestService
     put:
       summary: Edit an existing question by test and question ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Question updated!
       tags:
         - TestService
     delete:
       summary: Delete an existing question by test and question ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: topicId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Question deleted!
       tags:
         - TestService
   /tests/{testId}/test-results:
     post:
       summary: Create a new test results by test ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Tests results created!
       tags:
         - TestService
     get:
       summary: Get all test results by test ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '201':
+          description: Tests results retrieved!
       tags:
         - TestService
   /tests/{testId}/test-results/{testResultId}:
     get:
       summary: Get an existing test results by test  and test results ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: testResultId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
-          description: '---'
+          description: Test results retrieved!
       tags:
         - TestService
     put:
       summary: Edit an existing test results by test and test results ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: testResultId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
-          description: '---'
+          description: Test results updated!
       tags:
         - TestService
     delete:
       summary: Delete an existing test results by test and test results ID
+      parameters:
+        - name: testId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: testResultId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
-          description: '---'
+        '204':
+          description: Test results deleted!
       tags:
         - TestService
-  /feedbacks/user/{userId}/course/{courseId}:
+  /feedbacks:
     post:
       summary: Create a new feedback
       responses:
-        '200':
+        '201':
           description: Feedback created successfully
       tags:
         - FeedbackService
   /feedbacks/courses/{courseId}:
     get:
       summary: Get all feedbacks for a specific course by ID
+      parameters:
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Feedback retrieved successfully
@@ -429,6 +819,17 @@ paths:
   /feedbacks/{feedbackId}/courses/{courseId}:
     get:
       summary: Get feedback for a specific course by course and feedback ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
           description: Feedback retrieved successfully
@@ -437,6 +838,12 @@ paths:
   /feedbacks/students/{studentId}:
     get:
       summary: Get all feedbacks for a specific student by ID
+      parameters:
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Feedback retrieved successfully
@@ -445,6 +852,17 @@ paths:
   /feedbacks/{feedbackId}/students/{studentId}:
     get:
       summary: Get feedback for a specific student by student and feedback ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: studentId
+          in: path
+          required: true
+          schema:
+            type: integer    
       responses:
         '200':
           description: Feedback retrieved successfully
@@ -453,6 +871,12 @@ paths:
   /feedbacks/{feedbackId}:
     put:
       summary: Update feedback by ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Feedback updated successfully
@@ -460,8 +884,14 @@ paths:
         - FeedbackService
     delete:
       summary: Delete feedback by ID
+      parameters:
+        - name: feedbackId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
-        '200':
+        '204':
           description: Feedback deleted successfully
       tags:
         - FeedbackService
