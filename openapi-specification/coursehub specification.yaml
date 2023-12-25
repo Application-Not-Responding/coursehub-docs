@@ -9,9 +9,9 @@ tags:
   - name: UserService
     description: Operations related to users
   - name: CourseService
-    description: Operations related to tests
-  - name: TestService
     description: Operations related to courses
+  - name: TestService
+    description: Operations related to tests
   - name: FeedbackService
     description: Operations related to feedbacks
 paths:
@@ -19,15 +19,15 @@ paths:
     post:
       summary: Create a new student
       responses:
-        '201':
-          description: Student created!
+        '200':
+          description: Student created successfully
       tags:
         - UserService
     get:
       summary: Get all students
       responses:
         '200':
-          description: Students retrived!
+          description: Student created!
       tags:
         - UserService
   /users/students/{studentId}:
@@ -41,12 +41,12 @@ paths:
             type: integer
       responses:
         '200':
-          description: Student retrived!
+          description: Student retrieved!
       tags:
         - UserService
   /users/students/{studentId}/student-fullname:
-    put:
-      summary: Edit student fullname by ID
+    patch:
+      summary: Edit student full name by ID
       parameters:
         - name: studentId
           in: path
@@ -55,12 +55,12 @@ paths:
             type: integer
       responses:
         '200':
-          description: Student fullname updated!
+          description: Student updated!
       tags:
         - UserService
   /users/students/{studentId}/courses:      
-    put:
-      summary: Update the student's course list
+    post:
+      summary: Add course to user's course list
       parameters:
         - name: studentId
           in: path
@@ -68,12 +68,12 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: Student course updated!
+        '201':
+          description: Course added to student course list!
       tags:
         - UserService
-    get:
-      summary: Get student's course list
+    delete:
+      summary: Delete course from user's course list
       parameters:
         - name: studentId
           in: path
@@ -81,19 +81,14 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: Student course list retrived!
+        '204':
+          description: Course deleted!
       tags:
         - UserService
-  /users/students/{studentId}/courses/{courseId}:       
+  /users/subscribers/{courseId}:       
     get:
-      summary: Get student's course by ID
+      summary: Get subscribers for course by courseID
       parameters:
-        - name: studentId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: courseId
           in: path
           required: true
@@ -101,7 +96,7 @@ paths:
             type: integer
       responses:
         '200':
-          description: Student course retrived!
+          description: Subscribers retrieved!
       tags:
         - UserService    
   /users/organizers:
@@ -116,7 +111,7 @@ paths:
       summary: Get all organizers
       responses:
         '200':
-          description: Organizers retrived!
+          description: Organizer created!
       tags:
         - UserService
   /users/organizers/{organizerId}:
@@ -130,11 +125,11 @@ paths:
             type: integer
       responses:
         '200':
-          description: Organizer retrived!
+          description: Organizer retrieved!
       tags:
         - UserService
   /users/organizers/{organizerId}/organizer-companyname:
-    put:
+    patch:
       summary: Edit organizer company name by ID
       parameters:
         - name: organizerId
@@ -144,12 +139,12 @@ paths:
             type: integer
       responses:
         '200':
-          description: Organizer company name updated!
+          description: Organizer updated!
       tags:
         - UserService
   /users/organizers/{organizerId}/courses:
-    put:
-      summary: Update organizer's course list
+    post:
+      summary: Add course to organizer's course list
       parameters:
         - name: organizerId
           in: path
@@ -157,12 +152,12 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: Organizer course list updated!
+        '201':
+          description: Course added to organizer course list!
       tags:
         - UserService
-    get:
-      summary: Get all organizer's course list
+    delete:
+      summary: Delete course from organizer's course list
       parameters:
         - name: organizerId
           in: path
@@ -170,8 +165,8 @@ paths:
           schema:
             type: integer
       responses:
-        '200':
-          description: Organizer course list retrived!
+        '204':
+          description: Course deleted from organizer course list!
       tags:
         - UserService
   /users/login:
@@ -179,39 +174,39 @@ paths:
       summary: Login into user account
       responses:
         '201':
-          description: You successfully login to your account!
+          description: User successfully logged into account!
       tags:
         - UserService
   /users/logout:
     post:
       summary: Logout from user account
       responses:
-        '201':
-          description: You successfully logout from your account!
+        '200':
+          description: User successfully logout from account!
       tags:
         - UserService
   /users/password-recovery-request:
     post:
       summary: Create password change request using email linked to account
       responses:
-        '200':
-          description: Recovery request was successfully submitted to your email adress!
+        '201':
+          description: Password recovery request successfully submited!
       tags:
         - UserService
   /users/change-password-by-recovery-code:
-    put:
+    patch:
       summary: Change the password using the recovery code
       responses:
         '200':
-          description: Password changed!
+          description: Password updated!
       tags:
         - UserService
   /users/change-password-by-previous-password:
-    put:
+    patch:
       summary: Change the password using the previous password
       responses:
         '200':
-          description: Password changed!
+          description: Password updated!
       tags:
         - UserService
   /courses:
@@ -270,8 +265,8 @@ paths:
       tags:
         - CourseService
   /courses/{courseId}/hide-course:
-    put:
-      summary: Hide course by ID
+    patch:
+      summary: Change course visibility
       parameters:
         - name: courseId
           in: path
@@ -310,15 +305,10 @@ paths:
           description: Topics retrived!
       tags:
         - CourseService
-  /courses/{courseId}/topics/{topicId}:
+  /courses/topics/{topicId}:
     get:
-      summary: Get an existing topic by сourse and topic ID
+      summary: Get an existing topic by topic ID
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: topicId
           in: path
           required: true
@@ -330,13 +320,8 @@ paths:
       tags:
         - CourseService
     put:
-      summary: Edit an existing topic by сourse and topic ID
+      summary: Edit an existing topic by topic ID
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: topicId
           in: path
           required: true
@@ -348,13 +333,8 @@ paths:
       tags:
         - CourseService
     delete:
-      summary: Delete an existing topic by сourse and topic ID
+      summary: Delete an existing topic by topic ID
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: topicId
           in: path
           required: true
@@ -365,16 +345,11 @@ paths:
           description: Topic deleted!
       tags:
         - CourseService
-  /courses/{courseId}/topics/{topicId}/lessons:
+  /courses/{courseId}/lessons:
     post:
-      summary: Create a new lesson in an existing course and topic
+      summary: Create a new lesson in an existing course
       parameters:
         - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
           in: path
           required: true
           schema:
@@ -385,14 +360,9 @@ paths:
       tags:
         - CourseService
     get:
-      summary: Get all lessons in an existing course and topic
+      summary: Get all lessons in an existing course
       parameters:
         - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
           in: path
           required: true
           schema:
@@ -402,20 +372,10 @@ paths:
           description: Lessons retrived!
       tags:
         - CourseService
-  /courses/{courseId}/topics/{topicId}/lessons/{lessonId}:
+  /courses/lessons/{lessonId}:
     get:
-      summary: Get lesson in an existing course and topic
+      summary: Get lesson in an existing course
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: lessonId
           in: path
           required: true
@@ -427,18 +387,8 @@ paths:
       tags:
         - CourseService
     put:
-      summary: Edit lesson in an existing course and topic
+      summary: Edit lesson in an existing course
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: lessonId
           in: path
           required: true
@@ -450,18 +400,8 @@ paths:
       tags:
         - CourseService
     delete:
-      summary: Delete lesson in an existing course and topic
+      summary: Delete lesson in an existing course
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: lessonId
           in: path
           required: true
@@ -472,15 +412,61 @@ paths:
           description: Lesson deleted!
       tags:
         - CourseService
-  /tests/courses/{courseId}/topic/{topicId}:
-    post:
-      summary: Create a new test
+  /courses/subscriptions/{userId}:
+    get:
+      summary: Get courses in subscriptions list of user by userId
       parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Courses in subscriptions list retrieved!
+      tags:
+        - CourseService
+  /courses/subscriptions/{userId}/course/{courseId}:
+    post:
+      summary: Add subscriber to course
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: courseId
+          in: path
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '201':
+          description: Subscriber to course added!
+      tags:
+        - CourseService
+    delete:
+      summary: Remove subscriber from course
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
         - name: courseId
           in: path
           required: true
           schema:
             type: integer
+      responses:
+        '200':
+          description: Subscriber from course removed!
+      tags:
+        - CourseService      
+  /tests/topics/{topicId}:
+    post:
+      summary: Create a new test
+      parameters:
         - name: topicId
           in: path
           required: true
@@ -491,15 +477,9 @@ paths:
           description: Test created!
       tags:
         - TestService
-  /tests/courses/{courseId}/topics/{topicId}:
     get:
-      summary: Get all tests
+      summary: Get all tests in topic
       parameters:
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: topicId
           in: path
           required: true
@@ -510,7 +490,7 @@ paths:
           description: Tests retrived!
       tags:
         - TestService
-  /tests/{testId}/courses/{courseId}/topic/{topicId}:
+  /tests/{testId}:
     get:
       summary: Get an existing test by ID
       parameters:
@@ -519,16 +499,6 @@ paths:
           required: true
           schema:
             type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer    
       responses:
         '200':
           description: Test retrived!
@@ -542,16 +512,6 @@ paths:
           required: true
           schema:
             type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer 
       responses:
         '200':
           description: Test updated!
@@ -565,36 +525,16 @@ paths:
           required: true
           schema:
             type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer 
       responses:
         '204':
           description: Test deleted!
       tags:
         - TestService
-  /tests/{testId}/courses/{courseId}/topic/{topicId}/questions:
+  /tests/{testId}/questions:
     post:
       summary: Create a question
       parameters:
         - name: testId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
           in: path
           required: true
           schema:
@@ -612,40 +552,15 @@ paths:
           required: true
           schema:
             type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
       responses:
         '200':
           description: Questions retrieved!
       tags:
         - TestService
-  /tests/{testId}/courses/{courseId}/topic/{topicId}/questions/{questionId}:
+  /tests/questions/{questionId}:
     get:
       summary: Get an existing question by ID
       parameters:
-        - name: testId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: questionId
           in: path
           required: true
@@ -659,21 +574,6 @@ paths:
     put:
       summary: Edit an existing question by test and question ID
       parameters:
-        - name: testId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: questionId
           in: path
           required: true
@@ -687,21 +587,6 @@ paths:
     delete:
       summary: Delete an existing question by test and question ID
       parameters:
-        - name: testId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: topicId
-          in: path
-          required: true
-          schema:
-            type: integer
         - name: questionId
           in: path
           required: true
@@ -712,6 +597,92 @@ paths:
           description: Question deleted!
       tags:
         - TestService
+  /tests/questions/{questionId}/answers:
+    post:
+      summary: Create a answer
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '201':
+          description: Answer created!
+      tags:
+        - TestService
+    get:
+      summary: Get all answers by question id
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '200':
+          description: Answers retrieved!
+      tags:
+        - TestService
+  /tests/questions/{questionId}/give-answer/{answerId}:
+    put:
+      summary: Given an answer
+      parameters:
+        - name: questionId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: answerId
+          in: path
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '200':
+          description: Answer given!
+      tags:
+        - TestService      
+  /tests/answers/{answerId}:
+    get:
+      summary: Get an existing answer by ID
+      parameters:
+        - name: answerId
+          in: path
+          required: true
+          schema:
+            type: integer    
+      responses:
+        '200':
+          description: Answer retrieved!
+      tags:
+        - TestService
+    put:
+      summary: Edit an existing answer by test and question ID
+      parameters:
+        - name: answerId
+          in: path
+          required: true
+          schema:
+            type: integer 
+      responses:
+        '200':
+          description: Answer updated!
+      tags:
+        - TestService
+    delete:
+      summary: Delete an existing answer by test and question ID
+      parameters:
+        - name: answerId
+          in: path
+          required: true
+          schema:
+            type: integer 
+      responses:
+        '204':
+          description: Answer deleted!
+      tags:
+        - TestService      
   /tests/{testId}/test-results:
     post:
       summary: Create a new test results by test ID
@@ -739,7 +710,7 @@ paths:
           description: Tests results retrieved!
       tags:
         - TestService
-  /tests/{testId}/test-results/{testResultId}:
+  /tests/{testId}/test-results/{userResultId}:
     get:
       summary: Get an existing test results by test  and test results ID
       parameters:
@@ -748,7 +719,7 @@ paths:
           required: true
           schema:
             type: integer
-        - name: testResultId
+        - name: userResultId
           in: path
           required: true
           schema:
@@ -766,7 +737,7 @@ paths:
           required: true
           schema:
             type: integer
-        - name: testResultId
+        - name: userResultId
           in: path
           required: true
           schema:
@@ -784,7 +755,7 @@ paths:
           required: true
           schema:
             type: integer
-        - name: testResultId
+        - name: userResultId
           in: path
           required: true
           schema:
