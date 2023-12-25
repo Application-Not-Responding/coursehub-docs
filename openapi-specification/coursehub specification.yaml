@@ -1,0 +1,467 @@
+openapi: 3.0.0
+info:
+  title: CourseHub Service API
+  description: >-
+    This API provides basic operations for CourseHub application such as
+    creating an account, editing and accessing courses. 
+  version: 1.0.0
+servers:
+  - url: https://localhost/api/v1
+tags:
+  - name: UserService
+    description: Operations related to users
+  - name: CourseService
+    description: Operations related to courses
+  - name: TestService
+    description: Operations related to test
+  - name: FeedbackService
+    description: Operations related to feedbacks
+paths:
+  /users/students:
+    post:
+      summary: Create a new student
+      responses:
+        '200':
+          description: Student created successfully
+      tags:
+        - UserService
+    get:
+      summary: Get all students
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/students/{studentId}:
+    get:
+      summary: Get student by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/students/{studentId}/student-fullname:
+    put:
+      summary: Edit student full name by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/students/{studentId}/courses:      
+    post:
+      summary: Add course to user's course list
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+    delete:
+      summary: Delete course from user's course list
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/subscribers/{courseId}:       
+    get:
+      summary: Get subscribers for course by courseID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService    
+  /users/organizers:
+    post:
+      summary: Create a new Organizer
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+    get:
+      summary: Get all organizers
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/organizers/{organizerId}:
+    get:
+      summary: Get organizer by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/organizers/{organizerId}/organizer-companyname:
+    put:
+      summary: Edit organizer company name by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/organizers/{organizerId}/courses:
+    post:
+      summary: Add course to organizer's course list
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+    delete:
+      summary: Delete course from organizer's course list
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - UserService
+  /users/login:
+    post:
+      summary: Login into user account
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+  /users/logout:
+    post:
+      summary: Logout from user account
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+  /users/password-recovery-request:
+    post:
+      summary: Create password change request using email linked to account
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+  /users/change-password-by-recovery-code:
+    put:
+      summary: Change the password using the recovery code
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+  /users/change-password-by-previous-password:
+    put:
+      summary: Change the password using the previous password
+      responses:
+        '200':
+          description: Organizer created successfully
+      tags:
+        - UserService
+  /courses:
+    post:
+      summary: Create a new course
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    get:
+      summary: Get all courses
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}:
+    get:
+      summary: Get course by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    put:
+      summary: Edit course by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    delete:
+      summary: Delete course by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}/hide-course:
+    post:
+      summary: Set hide property for course by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}/topics:
+    post:
+      summary: Create a new topic in an existing course by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    get:
+      summary: Get all existing topics by сourse ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}/topics/{topicId}:
+    get:
+      summary: Get an existing topic by сourse and topic ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    put:
+      summary: Edit an existing topic by сourse and topic ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    delete:
+      summary: Delete an existing topic by сourse and topic ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}/topics/{topicId}/lessons:
+    post:
+      summary: Create a new lesson in an existing course and topic
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    get:
+      summary: Get all lessons in an existing course and topic
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/{courseId}/topics/{topicId}/lessons/{lessonId}:
+    get:
+      summary: Get lesson in an existing course and topic
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    put:
+      summary: Edit lesson in an existing course and topic
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    delete:
+      summary: Delete lesson in an existing course and topic
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/subscriptions/{userId}:
+    get:
+      summary: Get courses in subscriptions list of user by userId
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /courses/subscriptions/{userId}/course/{courseId}:
+    post:
+      summary: Add subscriber to course
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+    delete:
+      summary: Remove subscriber from course
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - CourseService
+  /tests:
+    post:
+      summary: Create a new test
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    get:
+      summary: Get all tests
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /tests/{testId}:
+    get:
+      summary: Get an existing test by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    put:
+      summary: Edit an existing test by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    delete:
+      summary: Delete an existing test by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /tests/{testId}/questions:
+    post:
+      summary: Create a question
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    get:
+      summary: Get all questions by test ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /tests/{testId}/questions/{questionId}:
+    get:
+      summary: Get an existing question by ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    put:
+      summary: Edit an existing question by test and question ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    delete:
+      summary: Delete an existing question by test and question ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /tests/{testId}/test-results:
+    post:
+      summary: Create a new test results by test ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    get:
+      summary: Get all test results by test ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /tests/{testId}/test-results/{testResultId}:
+    get:
+      summary: Get an existing test results by test  and test results ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    put:
+      summary: Edit an existing test results by test and test results ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+    delete:
+      summary: Delete an existing test results by test and test results ID
+      responses:
+        '200':
+          description: '---'
+      tags:
+        - TestService
+  /feedbacks/user/{userId}/course/{courseId}:
+    post:
+      summary: Create a new feedback
+      responses:
+        '200':
+          description: Feedback created successfully
+      tags:
+        - FeedbackService
+  /feedbacks/courses/{courseId}:
+    get:
+      summary: Get all feedbacks for a specific course by ID
+      responses:
+        '200':
+          description: Feedback retrieved successfully
+      tags:
+        - FeedbackService
+  /feedbacks/{feedbackId}/courses/{courseId}:
+    get:
+      summary: Get feedback for a specific course by course and feedback ID
+      responses:
+        '200':
+          description: Feedback retrieved successfully
+      tags:
+        - FeedbackService
+  /feedbacks/students/{studentId}:
+    get:
+      summary: Get all feedbacks for a specific student by ID
+      responses:
+        '200':
+          description: Feedback retrieved successfully
+      tags:
+        - FeedbackService
+  /feedbacks/{feedbackId}/students/{studentId}:
+    get:
+      summary: Get feedback for a specific student by student and feedback ID
+      responses:
+        '200':
+          description: Feedback retrieved successfully
+      tags:
+        - FeedbackService
+  /feedbacks/{feedbackId}:
+    put:
+      summary: Update feedback by ID
+      responses:
+        '200':
+          description: Feedback updated successfully
+      tags:
+        - FeedbackService
+    delete:
+      summary: Delete feedback by ID
+      responses:
+        '200':
+          description: Feedback deleted successfully
+      tags:
+        - FeedbackService

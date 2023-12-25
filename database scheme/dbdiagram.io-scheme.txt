@@ -1,0 +1,113 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table feedback {
+  id integer [primary key]
+  text text
+  rating float
+  student_id integer
+  course_id integer
+  date_created timestamp
+  date_updated timestamp
+  isHidden boolean  
+}
+
+
+Table course {
+  id integer [primary key]
+  name varchar
+  description text
+  author_id integer
+  is_hidden boolean
+}
+
+Table topic {
+  id integer [primary key]
+  name varchar
+  description text
+  course_id integer
+}
+
+Table topic_test {
+  id integer [primary key]
+  topic_id integer
+}
+
+Table lesson {
+  id integer [primary key]
+  name varchar
+  description text
+  topic_id integer
+  materials text
+}
+
+Table course_student {
+  id integer [primary key]
+  course_id varchar
+}
+
+
+
+Table test {
+  id integer [primary key]
+  name varchar
+  time_to_complete time  
+  course_id integer
+}
+
+Table questions {
+  id integer [primary key]
+  text text
+  points integer
+  test_id integer
+}
+
+Table test_results {
+  id integer [primary key]
+  user_id integer
+  given_answer_id integer
+}
+
+Table answers {
+  id integer [primary key]
+  question_id integer
+  answer_text text
+  correct boolean
+}
+
+Table users {
+  id integer [primary key]
+  username varchar
+  password varchar
+  email varchar
+  name text
+  user_type_id integer
+}
+
+Table user_type {
+  id integer [primary key]
+  type_name varchar
+}
+
+Table user_course {
+  id integer [primary key]
+  user_id varchar
+}
+
+Ref: course.id < topic.course_id
+
+Ref: topic.id < lesson.topic_id
+
+Ref: topic.id < topic_test.topic_id
+
+Ref: course.id < course_student.course_id
+
+Ref: test_results.given_answer_id > answers.id
+
+Ref: answers.question_id > questions.id
+
+Ref: questions.test_id > test.id
+
+Ref: users.user_type_id < user_type.id
+
+Ref: users.id < user_course.user_id
