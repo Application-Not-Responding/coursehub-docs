@@ -412,11 +412,11 @@ paths:
           description: Lesson deleted!
       tags:
         - CourseService
-  /courses/subscriptions/{userId}:
+  /courses/subscriptions/{studentId}:
     get:
       summary: Get courses in subscriptions list of user by userId
       parameters:
-        - name: userId
+        - name: studentId
           in: path
           required: true
           schema:
@@ -426,11 +426,11 @@ paths:
           description: Courses in subscriptions list retrieved!
       tags:
         - CourseService
-  /courses/subscriptions/{userId}/course/{courseId}:
+  /courses/subscriptions/{studentId}/course/{courseId}:
     post:
       summary: Add subscriber to course
       parameters:
-        - name: userId
+        - name: studentId
           in: path
           required: true
           schema:
@@ -448,7 +448,7 @@ paths:
     delete:
       summary: Remove subscriber from course
       parameters:
-        - name: userId
+        - name: studentId
           in: path
           required: true
           schema:
@@ -866,3 +866,4 @@ paths:
           description: Feedback deleted successfully
       tags:
         - FeedbackService
+        
