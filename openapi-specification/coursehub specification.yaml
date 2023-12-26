@@ -787,25 +787,6 @@ paths:
           description: Feedback retrieved successfully
       tags:
         - FeedbackService
-  /feedbacks/{feedbackId}/courses/{courseId}:
-    get:
-      summary: Get feedback for a specific course by course and feedback ID
-      parameters:
-        - name: feedbackId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: courseId
-          in: path
-          required: true
-          schema:
-            type: integer    
-      responses:
-        '200':
-          description: Feedback retrieved successfully
-      tags:
-        - FeedbackService
   /feedbacks/students/{studentId}:
     get:
       summary: Get all feedbacks for a specific student by ID
@@ -820,26 +801,20 @@ paths:
           description: Feedback retrieved successfully
       tags:
         - FeedbackService
-  /feedbacks/{feedbackId}/students/{studentId}:
+  /feedbacks/{feedbackId}:
     get:
-      summary: Get feedback for a specific student by student and feedback ID
+      summary: Get feedback for a specific course by feedback ID
       parameters:
         - name: feedbackId
           in: path
           required: true
           schema:
             type: integer
-        - name: studentId
-          in: path
-          required: true
-          schema:
-            type: integer    
       responses:
         '200':
           description: Feedback retrieved successfully
       tags:
         - FeedbackService
-  /feedbacks/{feedbackId}:
     put:
       summary: Update feedback by ID
       parameters:
@@ -866,4 +841,3 @@ paths:
           description: Feedback deleted successfully
       tags:
         - FeedbackService
-        
